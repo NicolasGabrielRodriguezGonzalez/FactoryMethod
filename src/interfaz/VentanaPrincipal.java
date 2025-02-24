@@ -5,7 +5,6 @@ import mundo.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,18 +25,6 @@ public class VentanaPrincipal extends JFrame {
         JPanel contentPane = new JPanel(new BorderLayout());
         setContentPane(contentPane);
 
-        // Cargar imagen y colocarla en un JLabel a la izquierda
-        JLabel lblImagen = new JLabel();
-        try {
-            ImageIcon imagen = new ImageIcon(new URL("https://lh3.googleusercontent.com/M2JpI19gXK6S9l0e-vVoXS-PUV8wf5EmlVnHRe2khFrVmnADOoE1p36trYNojTsG-_cWy5eupdJfMtwO3JINNEA=w1280"));
-            lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH))); // Aumentar ancho
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        JPanel panelImagen = new JPanel();
-        panelImagen.add(lblImagen);
-        contentPane.add(panelImagen, BorderLayout.WEST); // Imagen a la izquierda
 
         // Instanciar vehículos usando el patrón Factory
         vehiculos = new ArrayList<>();
@@ -106,6 +93,26 @@ public class VentanaPrincipal extends JFrame {
         panelContenido.add(panelVehiculo);
 
         contentPane.add(panelContenido, BorderLayout.CENTER);
+        add(crearPanelImagen(), BorderLayout.WEST);
+    }
+    
+    private JPanel crearPanelImagen() {
+        JLabel lblImagen = new JLabel();
+
+        // Cargar la imagen desde la carpeta "resources" dentro de src
+        String rutaImagen = "/resources/consesionario.jpeg";  
+
+        try {
+            ImageIcon imagen = new ImageIcon(getClass().getResource(rutaImagen));
+            lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            lblImagen.setText("Error al cargar la imagen");
+        }
+
+        JPanel panelImagen = new JPanel();
+        panelImagen.add(lblImagen);
+        return panelImagen;
     }
 
     private void actualizarPrecio() {
